@@ -10,7 +10,8 @@ El procesamiento de imágenes y la interfaz se ejecutan de forma paralela, logra
 
 El sistema mantiene varias variables globales que controlan la lógica del procesamiento de video y la comunicación entre hilos.
 
-<img width="567" height="212" alt="image" src="https://github.com/user-attachments/assets/1a2c3c11-f7c4-4b39-830e-f3d4b3b91c93" />
+<img width="611" height="284" alt="image" src="https://github.com/user-attachments/assets/36680c68-d5ec-41f5-a518-2c288cab211b" />
+
 
 *Fragmento de las variables globales*
 
@@ -36,7 +37,7 @@ La aplicación utiliza **dos hilos principales** para dividir el trabajo:
 Ambos hilos se ejecutan en paralelo, comunicándose a través del buffer de frames.  
 El **mutex** protege las secciones críticas, mientras que los **semáforos** controlan la cantidad de frames en espera o disponibles.
 
-<img width="663" height="70" alt="image" src="https://github.com/user-attachments/assets/62df98b5-202f-4aa1-bcf3-347f63c8e96d" />
+<img width="817" height="230" alt="image" src="https://github.com/user-attachments/assets/3285a4d1-7c1e-4ff5-8cdd-7fb690396c63" />
 
 *Fragmento de inicialización de los hilos y mecanismos de concurrencia*
 
@@ -50,7 +51,8 @@ El **semaforo**, por su parte, limita la cantidad de frames almacenados al mismo
 El hilo productor se encarga de obtener las imágenes de la cámara usando OpenCV.  
 Cada frame capturado se coloca dentro del buffer, siempre y cuando haya espacio disponible (controlado por el semáforo de espacios).
 
-<img width="908" height="263" alt="image" src="https://github.com/user-attachments/assets/5f39c1a1-1c9f-47cf-9f89-9b998d4eb48d" />
+<img width="681" height="470" alt="image" src="https://github.com/user-attachments/assets/fc63d7a6-77b7-495d-8892-471837db0040" />
+
 
 *Fragmento del hilo productor*
 
@@ -64,7 +66,8 @@ Si el buffer está lleno, el productor se bloquea hasta que el consumidor libere
 El hilo consumidor toma los frames almacenados en el buffer y los procesa con **MediaPipe Pose**, que detecta los puntos del cuerpo humano.  
 A partir de estos puntos, se calcula la distancia vertical entre los hombros y las caderas para determinar si la persona está de pie o sentada.
 
-<img width="1041" height="778" alt="image" src="https://github.com/user-attachments/assets/456f3b48-5b7b-4e63-9c5a-70a4fdb31858" />
+<img width="1130" height="613" alt="image" src="https://github.com/user-attachments/assets/9fa7cfa4-7838-4a56-adde-da167b1651a1" />
+
 
 *Fragmento del hilo consumidor*
 
@@ -85,6 +88,9 @@ En esta aplicación, las secciones críticas aparecen cuando se modifican o leen
 El uso del `mutex_postura` garantiza exclusión mutua, impidiendo que los hilos interfieran entre sí.  
 Esto asegura que las imágenes mostradas y los resultados de detección siempre sean coherentes y estén sincronizados.
 
+<img width="671" height="195" alt="image" src="https://github.com/user-attachments/assets/79a2f887-7de8-42fb-ae09-3b0160037fec" />
+
+
 ---
 
 ## Interfaz con Streamlit
@@ -94,7 +100,8 @@ Incluye dos botones principales:
 - **Iniciar detección:** activa ambos hilos y comienza el procesamiento.  
 - **Detener:** detiene la ejecución de los hilos y libera la cámara.
 
-<img width="890" height="312" alt="image" src="https://github.com/user-attachments/assets/f1d93b08-2131-409f-a5c2-3b20533a35b7" />
+<img width="1267" height="970" alt="image" src="https://github.com/user-attachments/assets/4df850cc-9eb7-4789-8646-60d0802ba8df" />
+
 
 *Fragmento del control de interfaz con Streamlit*
 
